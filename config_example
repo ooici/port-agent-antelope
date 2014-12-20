@@ -1,0 +1,6 @@
+log_config logging.yaml
+pid_dir .
+command_port 54321
+data_port 54322
+heartbeat_interval 1
+antelope_orb_name igpprt.ucsd.edu:6510

@@ -1,0 +1,9 @@
+#!/usr/bin/env python
+
+import os
+os.environ['ANTELOPE_PYTHON_GILRELEASE'] = '1'
+
+from port_agent.main import main
+
+exit(main())
+

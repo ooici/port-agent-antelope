@@ -1,0 +1,57 @@
+Most of the CPU time is eaten up by the following activities:
+1. Calculating the checksum
+2. Converting Packets to dicts
+3. Pickling packets
+
+If performance is unacceptable, I suggest reimplimenting these tasks in Cython,
+and using a simpler binary encoding instead of pickle.
+
+
+Wed May 15 20:49:44 2013    stats
+
+         6816457 function calls (6041724 primitive calls) in 83.498 seconds
+
+   Ordered by: internal time
+   List reduced from 1409 to 40 due to restriction <40>
+
+   ncalls  tottime  percall  cumtime  percall filename:lineno(function)
+    93/81   54.533    0.586   79.555    0.982 /home/jeff/pydlmon-ve-new/src/gevent/gevent/hub.py:336(wait)
+    14266    6.153    0.000    6.153    0.000 ./port_agent/packet.py:69(calculateChecksum)
+1455514/727757    3.082    0.000    5.451    0.000 Pkt.py:799(__getattribute__)
+    15913    1.514    0.000    9.601    0.001 ./port_agent/orbpkt2dict.py:3(orbpkt2dict)
+    15913    1.166    0.000    1.166    0.000 {cPickle.dumps}
+   429651    1.018    0.000    1.907    0.000 Pkt.py:223(__setattr__)
+    160/2    0.893    0.006    0.000    0.000 /home/jeff/pydlmon-ve-new/src/gevent/gevent/event.py:56(wait)
+      6/1    0.777    0.130   82.053   82.053 /home/jeff/pydlmon-ve-new/src/gevent/gevent/greenlet.py:320(run)
+    14266    0.664    0.000    0.664    0.000 {method 'send' of '_socket.socket' objects}
+   381912    0.602    0.000    0.889    0.000 Pkt.py:216(_update_packet)
+    15913    0.458    0.000    0.741    0.000 stock.py:313(auto_convert)
+    47739    0.421    0.000    2.007    0.000 Pkt.py:209(_update_self)
+    76606    0.397    0.000    0.397    0.000 {antelope._Pkt._PktChannel_data_get}
+    15913    0.372    0.000   14.360    0.001 ./port_agent/orbpktsrc.py:105(_publish)
+   286434    0.288    0.000    0.288    0.000 {antelope._Pkt._Pkt_srcnameparts_set}
+    15913    0.279    0.000    0.279    0.000 {antelope._Pkt._unstuffPkt}
+    15915    0.266    0.000    1.348    0.000 /home/jeff/pydlmon-ve-new/src/gevent/gevent/threadpool.py:148(spawn)
+      417    0.260    0.001    0.260    0.001 {posix.stat}
+    15913    0.211    0.000    0.322    0.000 Pkt.py:585(channels)
+    31841    0.197    0.000    0.197    0.000 {method 'release' of 'thread.lock' objects}
+    30353    0.195    0.000   76.544    0.003 {method 'switch' of 'greenlet.greenlet' objects}
+        1    0.189    0.189    0.295    0.295 ./port_agent/port_agent.py:3(<module>)
+    30190    0.184    0.000    0.651    0.000 /home/jeff/pydlmon-ve-new/src/gevent/gevent/timeout.py:102(start_new)
+    14266    0.181    0.000    6.501    0.000 ./port_agent/packet.py:95(makepacket)
+    14193    0.180    0.000    0.761    0.000 /home/jeff/pydlmon-ve-new/src/gevent/gevent/queue.py:256(_unlock)
+    15913    0.175    0.000    2.520    0.000 Pkt.py:384(__init__)
+    30190    0.167    0.000    0.284    0.000 /home/jeff/pydlmon-ve-new/src/gevent/gevent/timeout.py:86(__init__)
+    15913    0.164    0.000    0.164    0.000 stock.py:255(sz2dbl)
+    15913    0.151    0.000    1.143    0.000 Pkt.py:194(__init__)
+    14194    0.148    0.000    0.351    0.000 /home/jeff/pydlmon-ve-new/src/gevent/gevent/queue.py:171(get)
+    76606    0.146    0.000    0.658    0.000 Pkt.py:810(data)
+    15915    0.140    0.000    0.785    0.000 /home/jeff/pydlmon-ve-new/src/gevent/gevent/event.py:283(_notify_links)
+    38303    0.137    0.000    0.568    0.000 Pkt.py:847(nsamp)
+    31869    0.129    0.000    0.129    0.000 {method 'acquire' of 'thread.lock' objects}
+    15915    0.125    0.000    0.256    0.000 /home/jeff/pydlmon-ve-new/src/gevent/gevent/event.py:205(get)
+    31826    0.124    0.000    0.124    0.000 {antelope._Pkt._freePkt}
+    31830    0.122    0.000    0.176    0.000 /home/jeff/pydlmon-ve-new/src/gevent/gevent/event.py:291(rawlink)
+    31191    0.114    0.000    0.114    0.000 {getattr}
+    15913    0.111    0.000    0.111    0.000 {antelope._Pkt._newPkt}
+    14266    0.111    0.000    0.912    0.000 /home/jeff/pydlmon-ve-new/src/gevent/gevent/socket.py:450(sendall)
